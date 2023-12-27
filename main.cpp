@@ -1,15 +1,19 @@
+#include <time.h>
 #include "Simulator.hpp"
 
 using namespace std;
 
 int main (int argc, char ** argv) {
-    int selection = 0; // 0 = random, 1 = always stay, 2 = always swap
-    int numOfTrys = 0;
+    srand(time(0));
+    _int selection = 0; // 0 = random, 1 = always stay, 2 = always swap
+    _int numOfTrys = giveRandTries(100, 10000);
     string input = "";
+    Simulator *sim;
 
     switch (argc) {
     case 1:
         cout << "Random seleccion with random number of tries"  << endl;
+        sim = new Simulator(0, numOfTrys);
         break;
 
     case 2:
@@ -24,15 +28,16 @@ int main (int argc, char ** argv) {
             return EXIT_SUCCESS;
         }
         
+        sim = new Simulator(stoi(argv[1]), numOfTrys);
+        
         cout << 1 << " seleccion with random number of tries" << endl;
 
         break;
     
     case 3:
-        cout << "Random seleccion with random number of tries" << endl;
-        break;
-
-    case 4:
+        cout << "X seleccion with Y number of tries" << endl;
+        
+        sim = new Simulator(stoi(argv[1]), stoi(argv[2]));
         break;
 
     default:
@@ -40,9 +45,11 @@ int main (int argc, char ** argv) {
         return EXIT_FAILURE;
     }
 
-    cout << "algop" << endl;
-    Simulator *sim = new Simulator();
-    cout << "algop" << endl;
+    cout << "start" << endl;
+    cout << "1 - successes: " << sim->simulate() << endl;
+    cout << "1 total of stays: " << sim->numberOfStay() << endl;
+    cout << "1 total of swaps: " << sim->numberOfSwap() << endl;
+    cout << "1 total of tries: " << sim->numberOfTries() << endl;
     delete sim;
 
     return EXIT_SUCCESS;

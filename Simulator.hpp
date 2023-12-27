@@ -3,16 +3,26 @@
 
 #include <string>
 #include <iostream>
+#include "Utils.hpp"
 
 class Simulator
 {
     public:
-        Simulator(/* args */);
+        Simulator(_int type, _int tries);
         ~Simulator();
+        _int simulate();
+        _int numberOfStay();
+        _int numberOfSwap();
+        _int numberOfTries();
         
     private:
-        int winDoor;
-        int slctdDoor;
+        _int numberOfSimulations; // Total of simulations when call 
+
+        _int typeOfSlct;
+        _int numOfTries;
+
+        _int stay;
+        _int swap;
 };
 
 #endif
