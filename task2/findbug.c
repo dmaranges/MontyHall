@@ -163,7 +163,6 @@ matrix_t matrixdup(const matrix_t matrix) {
                 matrixfree(copy);
 				return NULL;
             }
-            // Terminate array with NULL
             //copy[i + 1] = NULL; //error 1
 
         } else {
@@ -173,6 +172,7 @@ matrix_t matrixdup(const matrix_t matrix) {
         }
     }
 
+    // Terminate array with NULL
     copy[i] = NULL;
     return copy;
 }

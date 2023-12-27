@@ -1,4 +1,4 @@
-#include "Simulator.hpp"
+#include "../include/Simulator.hpp"
 
 using namespace std;
 
@@ -13,6 +13,8 @@ Simulator::~Simulator()
 
 _int Simulator::simulate()
 {
+    swap = 0;
+    stay = 0;
     _int totalWin = 0;
     for (_int i = 0; i < numOfTries; i++)
     {
