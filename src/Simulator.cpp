@@ -2,7 +2,12 @@
 
 using namespace std;
 
-Simulator::Simulator(_int type, _int tries) : typeOfSlct(type), numOfTries(tries), stay(0), swap(0)
+Simulator::Simulator(_int type, _int tries) :
+    typeOfSlct(type),
+    numOfTries(tries),
+    stay(0),
+    swap(0),
+    totalWin(0)
 {
 
 }
@@ -16,7 +21,7 @@ _int Simulator::simulate()
     //Reset previus simulation.
     swap = 0;
     stay = 0;
-    _int totalWin = 0;
+    totalWin = 0;
 
     for (_int i = 0; i < numOfTries; i++)
     {
@@ -69,4 +74,8 @@ _int Simulator::numberOfSwap()
 _int Simulator::numberOfTries()
 {
     return numOfTries;
+}
+_int Simulator::winPercentage()
+{
+    return (numOfTries != 0) ? ((totalWin * 100) / numOfTries) : 0;
 }

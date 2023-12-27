@@ -38,6 +38,11 @@ class Simulator
          * Return how many tries are specify.
         *********************************************************************************/
         _int numberOfTries();
+
+        /*********************************************************************************
+         * Return the percentage (between 0 to 100) of win in the last simulation.
+        *********************************************************************************/
+        _int winPercentage();
         
     protected:
         /*********************************************************************************
@@ -49,6 +54,7 @@ class Simulator
     private:
         _int typeOfSlct; // Type of selection (swap or stay) "0 = rand", "1 = stay", "2 = swap"
         _int numOfTries; // Quantity of tries to simulate
+        _int totalWin; // Quantity of wins
 
         _int stay; // Save the number of situations where the competitor do not chage the seleccion in the simulation
         _int swap; // Save the number of situations where the competitor chage the seleccion in the simulation
