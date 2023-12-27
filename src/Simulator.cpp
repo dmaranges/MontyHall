@@ -26,39 +26,32 @@ _int Simulator::simulate()
             if (stayOrSwap == 1)
             {
                 ++stay;
-                if (winDoor == slctDoor)
-                {
-                    ++totalWin;
-                }
+                tryToHit(winDoor, slctDoor, totalWin, &isEq);
             }
             else if (stayOrSwap == 2)
             {
                 ++swap;
-                if (winDoor != slctDoor)
-                {
-                    ++totalWin;
-                }
+                tryToHit(winDoor, slctDoor, totalWin, &notEq);
             }
         }
         else if (typeOfSlct == 1)
         {
             ++stay;
-            if (winDoor == slctDoor)
-            {
-                ++totalWin;
-            }
+            tryToHit(winDoor, slctDoor, totalWin, &isEq);
         }
         else
         {
             ++swap;
-            if (winDoor != slctDoor)
-            {
-                ++totalWin;
-            }
+            tryToHit(winDoor, slctDoor, totalWin, &notEq);
         }
     }
     
     return totalWin;
+}
+
+void Simulator::tryToHit(_int winDoor, _int slctDoor, _int &totalWin, bool(*func)(int, int))
+{
+    func(winDoor, slctDoor) ? totalWin++ : 0;
 }
 
 _int Simulator::numberOfStay()

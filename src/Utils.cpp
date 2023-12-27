@@ -24,3 +24,13 @@ _int oneOrTwo() {
 
     return selection < 10 ?  1 : 2;
 }
+
+bool notEq(_int a, _int b)
+{
+    return a != b;
+}
+
+bool isEq(_int a, _int b)
+{
+    return a == b;
+}

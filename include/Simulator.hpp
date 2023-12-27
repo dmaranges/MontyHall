@@ -3,6 +3,8 @@
 
 #include <string>
 #include <iostream>
+#include <functional>
+
 #include "Utils.hpp"
 
 class Simulator
@@ -15,6 +17,9 @@ class Simulator
         _int numberOfSwap();
         _int numberOfTries();
         
+    protected:
+        void tryToHit(_int winDoor, _int slctDoor, _int &totalWin, bool(*func)(int, int));
+
     private:
         _int numberOfSimulations; // Total of simulations when call 
 
