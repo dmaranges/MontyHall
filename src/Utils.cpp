@@ -2,11 +2,11 @@
 
 #include <string>
 
-_int giveRandTries(_int minV, _int maxV) {    
+_int giveRandRange(_int minV, _int maxV) {    
     return minV + (rand() % (maxV - minV));
 }
 
-_int giveRandSelection() {
+_int giveRandOneToThre() {
     _int selection = (rand() % 30);
 
     if (selection < 10)
@@ -39,7 +39,6 @@ bool isEq(_int a, _int b)
 
 _int checkInput(string str)
 {
-    cout << str << endl;
     _int inpValue = -1;
     try
     {

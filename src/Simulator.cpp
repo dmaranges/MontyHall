@@ -25,8 +25,8 @@ _int Simulator::simulate()
 
     for (_int i = 0; i < numOfTries; i++)
     {
-        _int winDoor = giveRandSelection();
-        _int slctDoor = giveRandSelection();
+        _int winDoor = giveRandOneToThre();
+        _int slctDoor = giveRandOneToThre();
         if (typeOfSlct == 0)
         {
             _int stayOrSwap = oneOrTwo();

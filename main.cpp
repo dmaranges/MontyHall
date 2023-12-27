@@ -29,7 +29,7 @@ int main(int argc, char ** argv) {
 
     switch (argc) {
     case 1:
-        numOfTrys = giveRandTries(100, 10000);
+        numOfTrys = giveRandRange(100, 10000);
         if (sim = new Simulator(0, numOfTrys), !sim) {
             cout << "[ERROR]: Insufficient memory for string copy." << endl;
             delete sim;
@@ -54,7 +54,7 @@ int main(int argc, char ** argv) {
             cout << "[ERROR]: Not valid type of selection" << endl;
             return EXIT_FAILURE;
         }
-        numOfTrys = giveRandTries(100, 10000);
+        numOfTrys = giveRandRange(100, 10000);
 
         // Create simulator obj.
         if (sim = new Simulator(typeV, numOfTrys), !sim) {
