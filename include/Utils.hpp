@@ -18,4 +18,8 @@ bool notEq(_int a, _int b);
 
 bool isEq(_int a, _int b);
 
+_int checkInput(string str);
+
+void printHelp(string arg);
+
 #endif
