@@ -72,14 +72,7 @@ int main(int argc, char ** argv) {
     }
 
     // Copy the matrix and delete the original
-    for (int it = 0; parts[it]; it++) {
-        printf("parts = %s\n", parts[it]);
-    }
     copy = matrixdup(parts);
-    
-    for (int it = 0; copy[it]; it++) {
-        printf("copy = %s\n", copy[it]);
-    }
     matrixfree(parts);
 
     // Print the matrix
@@ -138,7 +131,7 @@ char ** strsplit(const string_t string, char delim) {
             matrixfree(matrix);
             return NULL;
         }
-    };
+    }
 
     return matrix;
 }
@@ -163,7 +156,9 @@ matrix_t matrixdup(const matrix_t matrix) {
                 matrixfree(copy);
 				return NULL;
             }
-            //copy[i + 1] = NULL; //error 1
+
+            // Terminate array with NULL
+            copy[i + 1] = NULL;
 
         } else {
             fprintf(stderr, "ERROR: Insufficient memory for matrix copy.\n");
@@ -172,8 +167,6 @@ matrix_t matrixdup(const matrix_t matrix) {
         }
     }
 
-    // Terminate array with NULL
-    copy[i] = NULL;
     return copy;
 }
 

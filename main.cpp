@@ -19,7 +19,6 @@ void runSimulator(_int numOfSim, Simulator *sim)
 
 int main(int argc, char ** argv) {
     srand(time(0));
-    _int selection = 0; // 0 = random, 1 = always stay, 2 = always swap
     _int numOfTrys = 0;
     _int typeV = 0;
     _int tryV = 0;
