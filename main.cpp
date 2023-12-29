@@ -7,7 +7,7 @@ int main(int argc, char ** argv) {
     srand(time(0));
     _int typeV = 0;
     _int tryV = 0;
-    _int numOfSim = 10;
+    _int numOfSim = 1;
     string input = "";
     Simulator *sim;
 
