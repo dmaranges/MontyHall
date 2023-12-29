@@ -19,115 +19,85 @@ void runSimulator(_int numOfSim, Simulator *sim)
 
 int main(int argc, char ** argv) {
     srand(time(0));
-    _int numOfTrys = 0;
     _int typeV = 0;
     _int tryV = 0;
     _int numOfSim = 1;
     string input = "";
     Simulator *sim;
 
-    switch (argc) {
-    case 1:
-        numOfTrys = giveRandRange(100, 10000);
-        if (sim = new Simulator(0, numOfTrys), !sim) {
-            cout << "[ERROR]: Insufficient memory for string copy." << endl;
-            delete sim;
-            return EXIT_FAILURE;
-        }
-        cout << "[DEBUG] Type of selection, tries and number of simulations by default"  << endl;
-        break;
+    // Return error because the inputs arguments are more than 3
+    if (argc > 4)
+    {
+        log("[ERROR] Too much arguments given.");
+        return EXIT_FAILURE;
+    }
 
-    case 2:
-        input = argv[1];
-        if (input.compare("--help") == 0) {
-            printHelp(argv[0]);
-            return EXIT_SUCCESS;
-        }
+    // Print help description
+    if (argc == 2 && input.compare("--help") == 0)
+    {
+        printHelp(argv[0]);
+        return EXIT_SUCCESS;
+    }
 
-        // Check first input.
-        typeV = checkInput(argv[1]);
-        if (typeV < 0)
-            return EXIT_FAILURE;
-        if (typeV > 2)
-        {
-            cout << "[ERROR]: Not valid type of selection" << endl;
-            return EXIT_FAILURE;
-        }
-        numOfTrys = giveRandRange(100, 10000);
-
-        // Create simulator obj.
-        if (sim = new Simulator(typeV, numOfTrys), !sim) {
-            cout << "[ERROR]: Insufficient memory for string copy." << endl;
-            delete sim;
-            return EXIT_FAILURE;
-        }
-        
-        cout << "[DEBUG] Type of selection equal to " << typeV
-             << ", tries and number of simulations by default"  << endl;
-
-        break;
+    // Set base case
+    if (argc == 1)
+    {
+        typeV = 0;
+        tryV = giveRandRange(100, 10000);
+        log("[DEBUG] Type of selection, tries and number of simulations by default");
+    }
     
-    case 3:        
-        // Check first input.
-        typeV = checkInput(argv[1]);
-        if (typeV < 0)
-            return EXIT_FAILURE;
-        if (typeV > 2)
+    // Set "typeV" and "tryV" variables, depending on the number of inputs
+    for (size_t it = 1; it < argc; it++)
+    {
+        if (it == 1)
         {
-            cout << "[ERROR]: Not valid type of selection" << endl;
-            return EXIT_FAILURE;
+            typeV = checkInput(argv[it]);
+            if (typeV < 0)
+                return EXIT_FAILURE;
+
+            if (typeV > 2)
+            {
+                log("[ERROR]: Not valid type of selection");
+                return EXIT_FAILURE;
+            }
+
+            if (argc == 2)
+            {
+                tryV = giveRandRange(100, 10000);
+
+                log("[DEBUG] Type of selection equal to " << typeV
+                    << ", tries and number of simulations by default");
+            }
         }
-        // Check second input.
-        tryV = checkInput(argv[2]);
-        if (tryV < 0)
-            return EXIT_FAILURE;
+        else if (it == 2)
+        {
+            tryV = checkInput(argv[it]);
+            if (tryV < 0)
+                return EXIT_FAILURE;
+            if (argc == 3)
+            {
+                log("[DEBUG] Type of selection equal to " << typeV
+                    << ", tries equal to " << tryV
+                    << "and number of simulations by default");
+            }
+        }
+        else
+        {
+            numOfSim = checkInput(argv[3]);
+            if (numOfSim < 0)
+                return EXIT_FAILURE;
+                log("[DEBUG] Type of selection equal to " << typeV
+                    << ", tries equal to " << tryV
+                    << "and " << numOfSim << " number of simulations");
+        }
         
-        // Create simulator obj.
-        if (sim = new Simulator(typeV, tryV), !sim) {
-            cout << "[ERROR]: Insufficient memory for string copy." << endl;
-            delete sim;
-            return EXIT_FAILURE;
-        }
-
-        cout << "[DEBUG] Type of selection equal to " << typeV
-             << ", tries equal to " << tryV
-             << "and number of simulations by default"  << endl;
-        break;
-
-    case 4:        
-        // Check first input.
-        typeV = checkInput(argv[1]);
-        if (typeV < 0)
-        {
-            return EXIT_FAILURE;
-        }
-        if (typeV > 2)
-        {
-            cout << "[ERROR]: Not valid type of selection" << endl;
-            return EXIT_FAILURE;
-        }
-        // Check second input.
-        tryV = checkInput(argv[2]);
-        if (tryV < 0)
-            return EXIT_FAILURE;
-        // Check third input.
-        numOfSim = checkInput(argv[3]);
-        if (numOfSim < 0)
-            return EXIT_FAILURE;
-        
-        // Create simulator obj.
-        if (sim = new Simulator(typeV, tryV), !sim) {
-            cout << "[ERROR]: Insufficient memory for string copy." << endl;
-            delete sim;
-            return EXIT_FAILURE;
-        }
-        cout << "[DEBUG] Type of selection equal to " << typeV
-             << ", tries equal to " << tryV
-             << "and " << numOfSim << " number of simulations"<< endl;
-        break;
-
-    default:
-        cout << "[ERROR] Too much arguments given." << endl;
+    }
+    
+    // Create simulator obj.
+    if (sim = new Simulator(typeV, tryV), !sim) {
+        log("[ERROR]: Insufficient memory for string copy.");
+        delete sim;
         return EXIT_FAILURE;
     }
     

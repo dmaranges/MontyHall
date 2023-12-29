@@ -44,11 +44,11 @@ _int checkInput(string str)
     {
         inpValue = stoi(str);
         if (inpValue < 0)
-            cout << "[ERROR] wrong input: " << str << endl;
+            log("[ERROR] wrong input: " << str);
     }
     catch(const std::exception& e)
     {
-        cout << "[ERROR] wrong input: " << str << endl;
+        log("[ERROR] wrong input: " << str);
     }
     return inpValue;
 }

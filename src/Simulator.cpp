@@ -18,7 +18,7 @@ Simulator::~Simulator()
 
 _int Simulator::simulate()
 {
-    //Reset previus simulation.
+    // Reset previus simulation.
     swap = 0;
     stay = 0;
     totalWin = 0;
@@ -27,21 +27,14 @@ _int Simulator::simulate()
     {
         _int winDoor = giveRandOneToThre();
         _int slctDoor = giveRandOneToThre();
-        if (typeOfSlct == 0)
+        _int selection = typeOfSlct;
+
+        if (typeOfSlct == 0) // Select random type in case 0
         {
-            _int stayOrSwap = oneOrTwo();
-            if (stayOrSwap == 1)
-            {
-                ++stay;
-                tryToHit(winDoor, slctDoor, totalWin, &isEq);
-            }
-            else if (stayOrSwap == 2)
-            {
-                ++swap;
-                tryToHit(winDoor, slctDoor, totalWin, &notEq);
-            }
+            (oneOrTwo() == 1) ? selection = 1 : selection = 2;
         }
-        else if (typeOfSlct == 1)
+        
+        if (selection == 1)
         {
             ++stay;
             tryToHit(winDoor, slctDoor, totalWin, &isEq);

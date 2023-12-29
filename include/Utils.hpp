@@ -5,36 +5,37 @@
 #include <iostream>
 
 #define _int int
+#define log(s) (std::cout << s << endl)
 
 using namespace std;
 
 /*********************************************************************************
- * Return a random valure from a min value to a max value
+ * Return a random value between min and max value.
 *********************************************************************************/
 _int giveRandRange(_int minV, _int maxV);
 
 /*********************************************************************************
- * Return a random valure between one and thre.
+ * Return a random value between one and three.
 *********************************************************************************/
 _int giveRandOneToThre();
 
 /*********************************************************************************
- * Return one or two random.
+ * Return a random value between one and two.
 *********************************************************************************/
 _int oneOrTwo();
 
 /*********************************************************************************
- * Return true if ints are different.
+ * Return true if inputs are different.
 *********************************************************************************/
 bool notEq(_int a, _int b);
 
 /*********************************************************************************
- * Return true if ints are the same.
+ * Return true if inputs are the same.
 *********************************************************************************/
 bool isEq(_int a, _int b);
 
 /*********************************************************************************
- * Return the int value from string convertion. Return -1 in error case.
+ * Return the int value from string conversion. Return -1 in error case.
 *********************************************************************************/
 _int checkInput(string str);
 
