@@ -3,25 +3,11 @@
 
 using namespace std;
 
-void runSimulator(_int numOfSim, Simulator *sim)
-{
-    for (_int i = 0; i < numOfSim; i++)
-    {
-        cout << "start simulation number " << i + 1 << endl;
-        cout << "total of successes:     " << sim->simulate() << endl;
-        cout << "total of stays:         " << sim->numberOfStay() << endl;
-        cout << "total of swaps:         " << sim->numberOfSwap() << endl;
-        cout << "total of tries:         " << sim->numberOfTries() << endl;
-        cout << "win percentage:         " << sim->winPercentage() << "%" << endl << endl;
-    }
-
-}
-
 int main(int argc, char ** argv) {
     srand(time(0));
     _int typeV = 0;
     _int tryV = 0;
-    _int numOfSim = 1;
+    _int numOfSim = 10;
     string input = "";
     Simulator *sim;
 
@@ -79,17 +65,20 @@ int main(int argc, char ** argv) {
             {
                 log("[DEBUG] Type of selection equal to " << typeV
                     << ", tries equal to " << tryV
-                    << "and number of simulations by default");
+                    << " and number of simulations by default");
             }
         }
         else
         {
             numOfSim = checkInput(argv[3]);
             if (numOfSim < 0)
+            {
+                log("[ERROR]: Not valid quantity of simulations");
                 return EXIT_FAILURE;
-                log("[DEBUG] Type of selection equal to " << typeV
-                    << ", tries equal to " << tryV
-                    << "and " << numOfSim << " number of simulations");
+            }
+            log("[DEBUG] Type of selection equal to " << typeV
+                << ", tries equal to " << tryV
+                << " and " << numOfSim << " number of simulations");
         }
         
     }
@@ -101,7 +90,12 @@ int main(int argc, char ** argv) {
         return EXIT_FAILURE;
     }
     
-    runSimulator(numOfSim, sim);
+    for (_int it = 0; it < numOfSim; it++)
+    {
+        sim->simulate();
+        sim->printResults(it + 1);
+    }
+    
     delete sim;
 
     return EXIT_SUCCESS;

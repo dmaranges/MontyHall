@@ -20,7 +20,7 @@ class Simulator
          * Simulator destructor. In this case, do nothing.
         *********************************************************************************/
         ~Simulator();
-        
+
         /*********************************************************************************
          * It resets the previous simulation and start new. This simulation returns how
          * many times the competitor wins.
@@ -46,6 +46,11 @@ class Simulator
          * Return the percentage (between 0 and 100) of win rate in the last simulation.
         *********************************************************************************/
         _int winPercentage();
+
+        /*********************************************************************************
+         * Print by console, the result of simulation number N
+        *********************************************************************************/
+        void printResults(_int numOfSim);
         
     protected:
         /*********************************************************************************

@@ -27,16 +27,6 @@ _int oneOrTwo() {
     return selection < 10 ?  1 : 2;
 }
 
-bool notEq(_int a, _int b)
-{
-    return a != b;
-}
-
-bool isEq(_int a, _int b)
-{
-    return a == b;
-}
-
 _int checkInput(string str)
 {
     _int inpValue = -1;
@@ -59,6 +49,6 @@ void printHelp(string arg)
          << arg << endl
          << "\"type of selection (random for default)\"" << endl
          << "\"number of tries (between 1 and " << INT_MAX << ", random by default)\"" << endl
-         << "\"number of simulations (1 by default)\"" << endl << endl
+         << "\"positive number of simulations (1 by default)\"" << endl << endl
          << "example: " << arg << " 1 1000 1" << endl << endl;
 }

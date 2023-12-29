@@ -49,11 +49,6 @@ _int Simulator::simulate()
     return totalWin;
 }
 
-void Simulator::tryToHit(_int winDoor, _int slctDoor, _int &totalWin, bool(*func)(int, int))
-{
-    func(winDoor, slctDoor) ? totalWin++ : 0;
-}
-
 _int Simulator::numberOfStay()
 {
     return stay;
@@ -68,7 +63,23 @@ _int Simulator::numberOfTries()
 {
     return numOfTries;
 }
+
 _int Simulator::winPercentage()
 {
     return (numOfTries != 0) ? ((totalWin * 100) / numOfTries) : 0;
+}
+
+void Simulator::printResults(_int numOfSim)
+{
+    cout << "start simulation number " << numOfSim << endl;
+    cout << "total of successes:     " << totalWin << endl;
+    cout << "total of stays:         " << stay << endl;
+    cout << "total of swaps:         " << swap << endl;
+    cout << "total of tries:         " << numOfTries << endl;
+    cout << "win percentage:         " << winPercentage() << "%" << endl << endl;
+}
+
+void Simulator::tryToHit(_int winDoor, _int slctDoor, _int &totalWin, bool(*func)(int, int))
+{
+    func(winDoor, slctDoor) ? totalWin++ : 0;
 }
