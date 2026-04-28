@@ -4,30 +4,46 @@
 #include <stdlib.h>
 #include <iostream>
 
-#define _int int
 #define log(s) (std::cout << s << endl)
 
 using namespace std;
 
+enum Desition {
+    Aleatory,
+    AlwaysKeep,
+    AlwaysChange
+};
+
+struct Simulation
+{
+        Desition desition; // Type of selection (swap or stay) "0 = random", "1 = stay", "2 = swap"
+        int numOfTries; // Quantity of tries to simulate
+        int totalWin; // Quantity of wins
+
+        int stay; // Save the number of situations where swaps the selection.
+        int swap; // Save the number of situations where stays the selection.
+};
+
+
 /*********************************************************************************
  * Return a random value between min and max value.
 *********************************************************************************/
-_int giveRandRange(_int minV, _int maxV);
+int giveRandRange(int minV, int maxV);
 
 /*********************************************************************************
  * Return a random value between one and three.
 *********************************************************************************/
-_int giveRandOneToThre();
+int giveRandOneToThre();
 
 /*********************************************************************************
  * Return a random value between one and two.
 *********************************************************************************/
-_int oneOrTwo();
+int oneOrTwo();
 
 /*********************************************************************************
  * Return the int value from string conversion. Return -1 in error case.
 *********************************************************************************/
-_int checkInput(string str);
+int checkInput(string str);
 
 /*********************************************************************************
  * Print in console the help description for --help argument.

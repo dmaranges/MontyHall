@@ -1,13 +1,18 @@
 #include <time.h>
-#include "include/Simulator.hpp"
+#include "Simulator.hpp"
+#include "Utils.hpp"
+
+#include <string>
+#include <iostream>
+#include <functional>
 
 using namespace std;
 
 int main(int argc, char ** argv) {
     srand(time(0));
-    _int typeV = 0;
-    _int tryV = 0;
-    _int numOfSim = 1;
+    int typeV = 0;
+    int tryV = 0;
+    int numOfSim = 1;
     string input = "";
     Simulator *sim;
 
@@ -90,7 +95,7 @@ int main(int argc, char ** argv) {
         return EXIT_FAILURE;
     }
     
-    for (_int it = 0; it < numOfSim; it++)
+    for (int it = 0; it < numOfSim; it++)
     {
         sim->simulate();
         sim->printResults(it + 1);

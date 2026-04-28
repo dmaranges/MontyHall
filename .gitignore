@@ -35,6 +35,10 @@
 *.out
 *.app
 
+### CMake ###
+# Builds
+build/
+
 ### VisualStudioCode ###
 .vscode/
 !.vscode/settings.json
