@@ -9,99 +9,15 @@
 using namespace std;
 
 int main(int argc, char ** argv) {
-    srand(time(0));
-    int typeV = 0;
-    int tryV = 0;
-    int numOfSim = 1;
-    string input = "";
-    Simulator *sim;
+    Simulation sumulation{Desition::Aleatory, 1000, 0, 0, 0};
+    Simulator *simulator = new Simulator(3);
 
-    // Return error because the inputs arguments are more than 3
-    if (argc > 4)
-    {
-        log("[ERROR] Too much arguments given.");
-        return EXIT_FAILURE;
-    }
+    simulator->startSimulation(sumulation);
 
-    // Print help description
-    if (argc == 2 && input.compare("--help") == 0)
-    {
-        printHelp(argv[0]);
-        return EXIT_SUCCESS;
-    }
-
-    // Set base case
-    if (argc == 1)
-    {
-        typeV = 0;
-        tryV = giveRandRange(100, 10000);
-        log("[DEBUG] Type of selection, tries and number of simulations by default");
-    }
-    
-    // Set "typeV" and "tryV" variables, depending on the number of inputs
-    for (size_t it = 1; it < argc; it++)
-    {
-        if (it == 1)
-        {
-            typeV = checkInput(argv[it]);
-            if (typeV < 0)
-                return EXIT_FAILURE;
-
-            if (typeV > 2)
-            {
-                log("[ERROR]: Not valid type of selection");
-                return EXIT_FAILURE;
-            }
-
-            if (argc == 2)
-            {
-                tryV = giveRandRange(100, 10000);
-
-                log("[DEBUG] Type of selection equal to " << typeV
-                    << ", tries and number of simulations by default");
-            }
-        }
-        else if (it == 2)
-        {
-            tryV = checkInput(argv[it]);
-            if (tryV < 0)
-                return EXIT_FAILURE;
-            if (argc == 3)
-            {
-                log("[DEBUG] Type of selection equal to " << typeV
-                    << ", tries equal to " << tryV
-                    << " and number of simulations by default");
-            }
-        }
-        else
-        {
-            numOfSim = checkInput(argv[3]);
-            if (numOfSim < 0)
-            {
-                log("[ERROR]: Not valid quantity of simulations");
-                return EXIT_FAILURE;
-            }
-            log("[DEBUG] Type of selection equal to " << typeV
-                << ", tries equal to " << tryV
-                << " and " << numOfSim << " number of simulations");
-        }
-        
-    }
-    
-    // Create simulator obj.
-    if (sim = new Simulator(typeV, tryV), !sim) {
-        log("[ERROR]: Insufficient memory for string copy.");
-        delete sim;
-        return EXIT_FAILURE;
-    }
-    
-    for (int it = 0; it < numOfSim; it++)
-    {
-        sim->simulate();
-        sim->printResults(it + 1);
-    }
-    
-    delete sim;
+    cout << "Total de intentos : " << sumulation.numOfTries << endl
+         << "Total de swap : " << sumulation.swap << endl
+         << "total de stay : " << sumulation.stay << endl
+         << "Total de victorias : " << sumulation.totalWin << endl;
 
     return EXIT_SUCCESS;
 }

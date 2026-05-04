@@ -1,32 +1,28 @@
 #include "Simulator.hpp"
-#include "Utils.hpp"
 #include "WinningDoor.hpp"
 #include "LosingDoor.hpp"
 
 #include <string>
 #include <iostream>
 #include <functional>
-#include <memory>
 
 using namespace std;
 
 Simulator::Simulator(unsigned int numberOfDoors) :
     nod(numberOfDoors)
 {
-    const unsigned int winningDoorPosition = (rand() % numberOfDoors);
-    std::vector<std::unique_ptr<Door>> createDoors(numberOfDoors);
-    for (unsigned int doors = 0; doors < numberOfDoors; doors++)
+    const unsigned int winningDoorPosition = getRandomChose(0, numberOfDoors);
+    for (unsigned int door = 0; door < numberOfDoors; door++)
     {
-        if (doors == numberOfDoors)
+        if (door == winningDoorPosition)
         {
-            createDoors.push_back(make_unique<WinningDoor>());
+            doors.push_back(make_unique<WinningDoor>());
         }
         else
         {
-            createDoors.push_back(make_unique<LosingDoor>());
+            doors.push_back(make_unique<LosingDoor>());
         }
     }
-    doors = createDoors;
 }
 
 Simulator::~Simulator()
@@ -34,5 +30,26 @@ Simulator::~Simulator()
 }
 
 void Simulator::startSimulation(Simulation& simulation) {
+    const Desition dSelected = simulation.desition;
+    bool keep = true;
 
+    for (int i = 0; i < simulation.numOfTries; i++)
+    {
+        if (dSelected == Desition::AlwaysChange) {
+            if (!doors[getRandomChose(0, nod)]->winningDoor())
+                simulation.totalWin++;
+        } else if (dSelected == Desition::AlwaysKeep) {
+            if (doors[getRandomChose(0, nod)]->winningDoor())
+                simulation.totalWin++;
+        } else {
+            keep = getRandomBool();
+            if (doors[getRandomChose(0, nod)]->winningDoor() && keep
+                || !doors[getRandomChose(0, nod)]->winningDoor() && !keep)
+            {
+                simulation.totalWin++;
+            }
+            keep ? simulation.stay++ : simulation.swap++;
+        }
+    }
+    
 }

@@ -2,7 +2,9 @@
 #define SIMULATOR_HPP
 
 #include <vector>
+#include <memory>
 #include "Door.hpp"
+#include "Utils.hpp"
 
 class Simulator
 {

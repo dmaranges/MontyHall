@@ -3,6 +3,7 @@
 
 #include <stdlib.h>
 #include <iostream>
+#include <random>
 
 #define log(s) (std::cout << s << endl)
 
@@ -24,48 +25,23 @@ struct Simulation
         int swap; // Save the number of situations where stays the selection.
 };
 
-
-/*********************************************************************************
- * Return a random value between min and max value.
-*********************************************************************************/
-int giveRandRange(int minV, int maxV);
-
-/*********************************************************************************
- * Return a random value between one and three.
-*********************************************************************************/
-int giveRandOneToThre();
-
-/*********************************************************************************
- * Return a random value between one and two.
-*********************************************************************************/
-int oneOrTwo();
-
-/*********************************************************************************
- * Return the int value from string conversion. Return -1 in error case.
-*********************************************************************************/
-int checkInput(string str);
-
-/*********************************************************************************
- * Print in console the help description for --help argument.
-*********************************************************************************/
-void printHelp(string arg);
-
-/*********************************************************************************
- * Return true if inputs are different.
-*********************************************************************************/
-template <typename T>
-bool notEq(T a, T b)
-{
-    return a != b;
+inline int getRandomBool () {
+    static std::random_device rd; 
+    static std::mt19937 gen(rd());
+    static std::bernoulli_distribution d(0.5); // 0.5 probability for true
+    return d(gen);
 }
 
-/*********************************************************************************
- * Return true if inputs are the same.
-*********************************************************************************/
-template <typename T>
-bool isEq(T a, T b)
-{
-    return a == b;
+inline int getRandomChose (int minValue, int maxValue) {
+    // 1. Obtain a random seed from hardware
+    std::random_device rd; 
+    // 2. Initialize the generator engine (Mersenne Twister) with the seed
+    std::mt19937 gen(rd());
+    // 3. Define the range [min, max] (e.g., 1 to 100 inclusive)
+    std::uniform_int_distribution<> distrib(minValue, maxValue - 1); 
+
+    // 4. Generate the number
+    return distrib(gen);
 }
 
 #endif
