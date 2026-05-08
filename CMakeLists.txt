@@ -17,7 +17,8 @@ FetchContent_MakeAvailable(ftxui)
 # 3. Definir los archivos fuentes (puedes listarlos o usar archivos individuales)
 set(SOURCES 
     src/main.cpp 
-    src/Simulator.cpp
+    src/Simulator.cpp 
+    src/ConsoleInputs.cpp
 )
 
 # 4. Crear el ejecutable
