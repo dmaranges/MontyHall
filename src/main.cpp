@@ -11,17 +11,24 @@
 using namespace std;
 
 int main(int argc, char** argv) {
-  Utils::Simulation sumulation{Utils::Desition::AlwaysChange, 1000, 0, 0, 0};
-  Simulator* simulator = new Simulator(5);
+  Utils::Simulation simulation{Utils::Desition::Aleatory};
+  Simulator* simulator = new Simulator(3, 1);
 
-  simulator->startSimulation(sumulation);
+  simulator->startSimulation(simulation);
 
-  cout << "Total de intentos : " << sumulation.numOfTries << endl
-       << "Total de swap : " << sumulation.swap << endl
-       << "total de stay : " << sumulation.stay << endl
-       << "Total de victorias : " << sumulation.totalWin << endl;
+  cout << "Total de intentos : " << simulation.numOfTries << endl
+       << "Total de swap : " << simulation.swap << endl
+       << "total de stay : " << simulation.stay << endl
+       << "Total de victorias : " << simulation.totalWin << endl;
 
   ConsoleInputs::ConsoleInputs::ConsoleInputs().inputTest();
+  ConsoleInputs::ConsoleInputs::ConsoleInputs().inputMenu(simulation);
+
+  cout << simulation.numberOfDoors << endl
+       << simulation.numOfTries << endl
+       << simulation.numberOfWiningDoors << endl
+       << simulation.numberOfSwaps << endl
+       << simulation.strategyType << endl;
 
   return EXIT_SUCCESS;
 }

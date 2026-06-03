@@ -18,13 +18,21 @@ namespace Utils {
 enum Desition { Aleatory, AlwaysKeep, AlwaysChange };
 
 struct Simulation {
-  Desition desition;  // Type of selection (swap or stay) "0 = random", "1 =
-                      // stay", "2 = swap"
-  int numOfTries;     // Quantity of tries to simulate
-  int totalWin;       // Quantity of wins
+  // Type of selection (swap or stay) "0 = random", "1 = stay", "2 = swap"
+  Desition desition;
 
-  int stay;  // Save the number of situations where swaps the selection.
-  int swap;  // Save the number of situations where stays the selection.
+  int strategyType = 0;
+  int numberOfDoors = 3;
+  int numberOfWiningDoors = 1;
+  int numberOfSwaps = 0;
+
+  int numOfTries = 1000;  // Quantity of tries to simulate
+  int totalWin = 0;       // Quantity of wins
+
+  int stay = 0;  // Save the number of situations where swaps the selection.
+  int swap = 0;  // Save the number of situations where stays the selection.
+
+  int typeOfSimulation = 0;
 };
 
 inline int getRandomBool() {
@@ -44,6 +52,28 @@ inline int getRandomChose(int minValue, int maxValue) {
 
   // 4. Generate the number
   return distrib(gen);
+}
+
+inline vector<int> getRandomChoses(int minValue, int maxValue, int length) {
+  std::vector<int> numbers;
+  numbers.reserve(
+      length);  // Optimizamos memoria reservando el espacio de antemano
+
+  // 1. Inicializar el dispositivo de aleatoriedad (semilla)
+  std::random_device rd;
+
+  // 2. Inicializar el motor generador con la semilla
+  std::mt19937 gen(rd());
+
+  // 3. Definir la distribución uniforme entre a y b
+  std::uniform_int_distribution<int> distribucion(minValue, maxValue);
+
+  // 4. Llenar el vector
+  for (int i = 0; i < length; ++i) {
+    numbers.push_back(distribucion(gen));
+  }
+
+  return numbers;
 }
 
 inline std::vector<std::unique_ptr<Door>> getRandomWinningDoors(

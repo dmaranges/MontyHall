@@ -9,14 +9,15 @@
 
 class Simulator {
  public:
-  Simulator(unsigned int numberOfDoors);
+  Simulator(unsigned int numberOfDoors, unsigned int numberOfWiningDoors);
 
   ~Simulator();
 
   void startSimulation(Utils::Simulation& simulation);
 
  private:
-  unsigned int nod;  // numberOfDoors
+  unsigned int nod;   // numberOfDoors
+  unsigned int nowd;  // numberOfWiningDoors
   std::vector<std::unique_ptr<Door>> doors;
 };
 

@@ -9,7 +9,9 @@
 
 using namespace std;
 
-Simulator::Simulator(unsigned int numberOfDoors) : nod(numberOfDoors) {
+Simulator::Simulator(unsigned int numberOfDoors,
+                     unsigned int numberOfWiningDoors)
+    : nod(numberOfDoors), nowd(numberOfWiningDoors) {
   const unsigned int winningDoorPosition =
       Utils::getRandomChose(0, numberOfDoors);
   for (unsigned int door = 0; door < numberOfDoors; door++) {
