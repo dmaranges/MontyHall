@@ -4,6 +4,7 @@
 class Door {
  public:
   virtual bool winningDoor() = 0;
+  virtual int totalDoors() = 0;
   virtual ~Door() {}
 };
 

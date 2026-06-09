@@ -4,6 +4,7 @@
 #include <stdlib.h>
 
 #include <iostream>
+#include <optional>
 #include <random>
 
 #include "LosingDoor.hpp"
@@ -19,20 +20,44 @@ enum Desition { Aleatory, AlwaysKeep, AlwaysChange };
 
 struct Simulation {
   // Type of selection (swap or stay) "0 = random", "1 = stay", "2 = swap"
-  Desition desition;
+  optional<Desition> desition;
 
   int strategyType = 0;
   int numberOfDoors = 3;
   int numberOfWiningDoors = 1;
   int numberOfSwaps = 0;
 
-  int numOfTries = 1000;  // Quantity of tries to simulate
-  int totalWin = 0;       // Quantity of wins
+  int numOfTries = 1000;          // Quantity of tries to simulate
+  std::atomic<int> totalWin = 0;  // Quantity of wins
 
   int stay = 0;  // Save the number of situations where swaps the selection.
   int swap = 0;  // Save the number of situations where stays the selection.
 
   int typeOfSimulation = 0;
+  // Constructor por defecto normal
+  Simulation() = default;
+
+  // CONSTRUCTOR DE MOVIMIENTO
+  Simulation(Simulation&& other) noexcept {
+    this->desition = other.desition;
+    this->numberOfDoors = other.numberOfDoors;
+    this->numberOfWiningDoors = other.numberOfWiningDoors;
+    this->numOfTries = other.numOfTries;
+    this->strategyType = other.strategyType;
+    this->typeOfSimulation = other.typeOfSimulation;
+    this->totalWin.store(other.totalWin.load());
+  }
+  /*
+    Simulation& operator=(Simulation&& other) noexcept {
+      this->desition = other.desition;
+      this->numberOfDoors = other.numberOfDoors;
+      this->numberOfWiningDoors = other.numberOfWiningDoors;
+      this->numOfTries = other.numOfTries;
+      this->strategyType = other.strategyType;
+      this->typeOfSimulation = other.typeOfSimulation;
+      this->totalWin.store(other.totalWin.load());
+      return *this;
+    }*/
 };
 
 inline int getRandomBool() {
@@ -109,6 +134,21 @@ inline std::vector<std::unique_ptr<Door>> getRandomWinningDoors(
   }
 
   return doors;
+}
+
+inline void printResults(Simulation& sim) {
+  cout << "numero de puertas" << sim.numberOfDoors << endl
+       << "numero de intentos" << sim.numOfTries << endl
+       << "numero de puertas de victorias" << sim.numberOfWiningDoors << endl
+       << "numero de cambios en custom" << sim.numberOfSwaps << endl
+       << "tipo de estrategia" << sim.strategyType << endl
+       << endl;
+
+  cout << "Total de intentos : " << sim.numOfTries << endl
+       << "Total de swap : " << sim.swap << endl
+       << "total de stay : " << sim.stay << endl
+       << "Total de victorias : " << sim.totalWin << endl
+       << endl;
 }
 
 }  // namespace Utils
