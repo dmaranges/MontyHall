@@ -9,6 +9,7 @@
 
 #include "LosingDoor.hpp"
 #include "WinningDoor.hpp"
+#include "log.hpp"
 
 #define log(s) (std::cout << s << endl)
 
@@ -16,22 +17,22 @@ using namespace std;
 
 namespace Utils {
 
-enum Desition { Aleatory, AlwaysKeep, AlwaysChange };
+enum Decision { Aleatory, AlwaysKeep, AlwaysChange };
 
 struct Simulation {
   // Type of selection (swap or stay) "0 = random", "1 = stay", "2 = swap"
-  optional<Desition> desition;
+  optional<Decision> decision;
 
   int strategyType = 0;
   int numberOfDoors = 3;
-  int numberOfWiningDoors = 1;
+  int numberOfWinningDoors = 1;
   int numberOfSwaps = 0;
 
-  int numOfTries = 1000;          // Quantity of tries to simulate
-  std::atomic<int> totalWin = 0;  // Quantity of wins
+  int numberOfTries = 1000;        // Quantity of tries to simulate
+  std::atomic<int> totalWins = 0;  // Quantity of wins
 
-  int stay = 0;  // Save the number of situations where swaps the selection.
-  int swap = 0;  // Save the number of situations where stays the selection.
+  int stays = 0;  // Count of times user stayed
+  int swaps = 0;  // Count of times user swapped
 
   int typeOfSimulation = 0;
   // Default normal constructor
@@ -39,23 +40,23 @@ struct Simulation {
 
   // MOVE CONSTRUCTOR
   Simulation(Simulation&& other) noexcept {
-    this->desition = other.desition;
+    this->decision = other.decision;
     this->numberOfDoors = other.numberOfDoors;
-    this->numberOfWiningDoors = other.numberOfWiningDoors;
-    this->numOfTries = other.numOfTries;
+    this->numberOfWinningDoors = other.numberOfWinningDoors;
+    this->numberOfTries = other.numberOfTries;
     this->strategyType = other.strategyType;
     this->typeOfSimulation = other.typeOfSimulation;
-    this->totalWin.store(other.totalWin.load());
+    this->totalWins.store(other.totalWins.load());
   }
   /*
     Simulation& operator=(Simulation&& other) noexcept {
-      this->desition = other.desition;
+      this->decision = other.decision;
       this->numberOfDoors = other.numberOfDoors;
-      this->numberOfWiningDoors = other.numberOfWiningDoors;
-      this->numOfTries = other.numOfTries;
+      this->numberOfWinningDoors = other.numberOfWinningDoors;
+      this->numberOfTries = other.numberOfTries;
       this->strategyType = other.strategyType;
       this->typeOfSimulation = other.typeOfSimulation;
-      this->totalWin.store(other.totalWin.load());
+      this->totalWins.store(other.totalWins.load());
       return *this;
     }*/
 };
@@ -90,7 +91,9 @@ inline vector<int> getRandomChoses(int minValue, int maxValue, int length) {
   std::mt19937 gen(rd());
 
   // 3. Define the uniform distribution between a and b
-  std::uniform_int_distribution<int> distribucion(minValue, maxValue);
+  // maxValue is exclusive upper bound for choosing indices [minValue,
+  // maxValue-1]
+  std::uniform_int_distribution<int> distribucion(minValue, maxValue - 1);
 
   // 4. Fill the vector
   for (int i = 0; i < length; ++i) {
@@ -136,18 +139,16 @@ inline std::vector<std::unique_ptr<Door>> getRandomWinningDoors(
 }
 
 inline void printResults(Simulation& sim) {
-  cout << "numero de puertas" << sim.numberOfDoors << endl
-       << "numero de intentos" << sim.numOfTries << endl
-       << "numero de puertas de victorias" << sim.numberOfWiningDoors << endl
-       << "numero de cambios en custom" << sim.numberOfSwaps << endl
-       << "tipo de estrategia" << sim.strategyType << endl
-       << endl;
+  LOG_INFO("Number of doors: ", sim.numberOfDoors);
+  LOG_INFO("Number of tries: ", sim.numberOfTries);
+  LOG_INFO("Number of winning doors: ", sim.numberOfWinningDoors);
+  LOG_INFO("Number of swaps (custom): ", sim.numberOfSwaps);
+  LOG_INFO("Strategy type: ", sim.strategyType);
 
-  cout << "Total de intentos : " << sim.numOfTries << endl
-       << "Total de swap : " << sim.swap << endl
-       << "total de stay : " << sim.stay << endl
-       << "Total de victorias : " << sim.totalWin << endl
-       << endl;
+  LOG_INFO("Total tries: ", sim.numberOfTries);
+  LOG_INFO("Total swaps: ", sim.swaps);
+  LOG_INFO("Total stays: ", sim.stays);
+  LOG_INFO("Total wins: ", sim.totalWins.load());
 }
 
 }  // namespace Utils

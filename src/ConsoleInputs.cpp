@@ -1,14 +1,14 @@
 #include "ConsoleInputs.hpp"
 
-#include <iostream>
-#include <string>
-#include <vector>
-
-// FTXUI Library
 #include <ftxui/component/component.hpp>
 #include <ftxui/component/screen_interactive.hpp>
 #include <ftxui/dom/elements.hpp>
 #include <ftxui/screen/screen.hpp>
+#include <iostream>
+#include <string>
+#include <vector>
+
+#include "log.hpp"
 
 using namespace ftxui;
 
@@ -37,9 +37,11 @@ Component makeNumericInput(std::string* variable_str, int* variable_int) {
     bool result = input->OnEvent(event);
 
     if (!variable_str->empty() && !itIsANumber(*variable_str)) {
-      *variable_str = copia;  // Revert if letters are entered
+      *variable_str = copia;
+      LOG_DEBUG("Revert if letters are entered");
     } else if (!variable_str->empty()) {
-      *variable_int = std::stoi(*variable_str);  // Update the integer
+      *variable_int = std::stoi(*variable_str);
+      LOG_DEBUG("Update the integer");
     }
     return result;
   });
@@ -48,38 +50,38 @@ Component makeNumericInput(std::string* variable_str, int* variable_int) {
 void ConsoleInputs::inputMenu(Utils::Simulation& simulation) {
   auto screen = ScreenInteractive::TerminalOutput();
 
-  // Actual navigation
-  int actual_menu = 0;  // 0 base, 1 Monty, 2 Custom
+  int actual_menu = 0;
+  LOG_DEBUG("0 base, 1 Monty, 2 Custom");
 
-  // Selection variables
   int base_selection = 0, monty_selection = 0, custom_selection = 0;
+  LOG_DEBUG("Selection variables");
 
-  // Customize simulation variables
-  std::string sNumberOfDoors = "3", sNumberOFWiningDoors = "1",
+  std::string sNumberOfDoors = "3", sNumberOfWinningDoors = "1",
               sNumberOfTries = "1000", sNumberOfSwaps = "0",
               sStrategyType = "0";
+  LOG_DEBUG("Customize simulation variables");
 
-  // Making Input sub-componentes with validation
+  LOG_DEBUG("Making Input sub-components with validation");
   Component inputNumberOfDoors =
       makeNumericInput(&sNumberOfDoors, &simulation.numberOfDoors);
-  Component inputNumberOFWiningDoors =
-      makeNumericInput(&sNumberOFWiningDoors, &simulation.numberOfWiningDoors);
+  Component inputNumberOfWinningDoors = makeNumericInput(
+      &sNumberOfWinningDoors, &simulation.numberOfWinningDoors);
   Component inputNumberOfTries =
-      makeNumericInput(&sNumberOfTries, &simulation.numOfTries);
+      makeNumericInput(&sNumberOfTries, &simulation.numberOfTries);
   Component inputNumberOfTries2 =
-      makeNumericInput(&sNumberOfTries, &simulation.numOfTries);
+      makeNumericInput(&sNumberOfTries, &simulation.numberOfTries);
   Component inputNumberOfSwaps =
       makeNumericInput(&sNumberOfSwaps, &simulation.numberOfSwaps);
   Component inputStrategyType =
       makeNumericInput(&sStrategyType, &simulation.strategyType);
 
-  // 1. base Menu options
+  LOG_DEBUG("1. base Menu options");
   std::vector<std::string> base_options = {"Monty Hall Mode",
                                            "Custom Monty Hall Mode", "Exit"};
 
   auto base_menu = Menu(&base_options, &base_selection);
 
-  // Catch press Enter event logic
+  LOG_DEBUG("Catch press Enter event logic");
   auto base_component = CatchEvent(base_menu, [&](Event event) {
     if (event == Event::Return) {
       if (base_selection == 0)
@@ -98,6 +100,7 @@ void ConsoleInputs::inputMenu(Utils::Simulation& simulation) {
                                             "Customize statistics", "Return"};
 
   auto monty_menu = Menu(&monty_options, &monty_selection);
+  LOG_DEBUG("2. Classic Monty Hall Menu");
   auto monty_component = CatchEvent(monty_menu, [&](Event event) {
     if (event == Event::Return) {
       if (monty_selection == 0) {
@@ -105,24 +108,27 @@ void ConsoleInputs::inputMenu(Utils::Simulation& simulation) {
         screen.ExitLoopClosure()();
       };
       if (monty_selection == 1) actual_menu = 2;
-      if (monty_selection == 2) actual_menu = 0;  // return
+      if (monty_selection == 2) {
+        actual_menu = 0;
+        LOG_DEBUG("return");
+      }
       return true;
     }
     return false;
   });
 
-  // Customize statistics for Monty hall simulation
+  LOG_DEBUG("Customize statistics for Monty hall simulation");
   int clasicOptionSelected = 0;
   std::vector<std::string> clasicOptions = {"Number Of Tries", "Strategy type"};
 
   auto clasicMenu = Menu(&clasicOptions, &clasicOptionSelected);
 
-  // 4. The Tab container (Right)
-  // Shows the corresponding input according to the selected index
+  LOG_DEBUG("4. The Tab container (Right)");
+  LOG_DEBUG("Shows the corresponding input according to the selected index");
   auto clasicInputsContainer = Container::Tab(
       {inputNumberOfTries2, inputStrategyType}, &clasicOptionSelected);
 
-  // Button to finish
+  LOG_DEBUG("Button to finish");
   Component clasicSaveBoton = Button("Save", [&] { actual_menu = 1; });
 
   auto clasicOptionsContainer = Container::Vertical(
@@ -134,6 +140,7 @@ void ConsoleInputs::inputMenu(Utils::Simulation& simulation) {
                                              "Customize statistics", "Return"};
 
   auto custom_menu = Menu(&custom_options, &custom_selection);
+  LOG_DEBUG("3. Custom Monty Hall Menu");
   auto custom_component = CatchEvent(custom_menu, [&](Event event) {
     if (event == Event::Return) {
       if (custom_selection == 0) {
@@ -141,35 +148,38 @@ void ConsoleInputs::inputMenu(Utils::Simulation& simulation) {
         screen.ExitLoopClosure()();
       };
       if (custom_selection == 1) actual_menu = 4;
-      if (custom_selection == 2) actual_menu = 0;  // return
+      if (custom_selection == 2) {
+        actual_menu = 0;
+        LOG_DEBUG("return");
+      }
       return true;
     }
     return false;
   });
 
-  // Customize statistics for Custom Monty hall simulation
+  LOG_DEBUG("Customize statistics for Custom Monty hall simulation");
   int customOptionSelected = 0;
   std::vector<std::string> customOptions = {
-      "Number Of Doors", "Number Of Wining Doors", "Number Of Tries",
+      "Number Of Doors", "Number Of Winning Doors", "Number Of Tries",
       "Number Of Swaps"};
 
   auto customMenu = Menu(&customOptions, &customOptionSelected);
 
-  // 4. The Tab container (Right)
-  // Shows the corresponding input according to the selected index
+  LOG_DEBUG("4. The Tab container (Right)");
+  LOG_DEBUG("Shows the corresponding input according to the selected index");
   auto customInputsContainer =
-      Container::Tab({inputNumberOfDoors, inputNumberOFWiningDoors,
+      Container::Tab({inputNumberOfDoors, inputNumberOfWinningDoors,
                       inputNumberOfTries, inputNumberOfSwaps},
                      &customOptionSelected);
 
-  // Button to finish
+  LOG_DEBUG("Button to finish");
   Component customSaveBoton = Button("Save", [&] { actual_menu = 3; });
 
   auto customOptionsContainer = Container::Vertical(
       {Container::Horizontal({customMenu, customInputsContainer}),
        customSaveBoton});
 
-  // TABS CONTAINER
+  LOG_DEBUG("TABS CONTAINER");
   auto main_container = Container::Tab(
       {
           base_component,
@@ -180,7 +190,7 @@ void ConsoleInputs::inputMenu(Utils::Simulation& simulation) {
       },
       &actual_menu);
 
-  // Visual renderation
+  LOG_DEBUG("Visual renderation");
   auto renderer = Renderer(main_container, [&] {
     std::string title = "";
     if (actual_menu == 0) title = "MONTY HALL SIMULATOR";

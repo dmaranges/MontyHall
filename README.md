@@ -67,3 +67,15 @@ On launch, use the interactive menu to choose between `Monty Hall Mode` and `Cus
 - `ConsoleInputs` manages the interactive menu and numeric validation.
 - `Simulator` creates door instances and runs simulations using threads.
 - `Utils` contains helper functions for random choice generation and result output.
+
+## Logging
+
+- The project uses a small structured logger defined in `include/log.hpp`.
+- Log output format: `["level"] "thread_id": "message"`.
+- Use `LOG_DEBUG(...)`, `LOG_INFO(...)`, `LOG_WARNING(...)`, and `LOG_ERROR(...)` macros.
+- Logging is thread-safe and prints the thread id to help debugging multi-threaded runs.
+
+## Notes on code
+
+- Some internal identifiers were standardized to camelCase (e.g. `numberOfDoors`, `numberOfWinningDoors`, `numberOfTries`, `numberOfSwaps`).
+- If you change struct field names, ensure all source files are rebuilt to avoid ABI issues when linking.

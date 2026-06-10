@@ -23,8 +23,8 @@ class Simulator {
   void clasicMontyHallSimulation();
   void customMontyHallSimulation();
 
-  unsigned int nod;   // numberOfDoors
-  unsigned int nowd;  // numberOfWiningDoors
+  unsigned int numberOfDoors;         // numberOfDoors
+  unsigned int numberOfWinningDoors;  // numberOfWinningDoors
   Utils::Simulation sim;
   std::mutex mtx;
   std::vector<std::unique_ptr<Door>> doors;
