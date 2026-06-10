@@ -37,9 +37,9 @@ Component makeNumericInput(std::string* variable_str, int* variable_int) {
     bool result = input->OnEvent(event);
 
     if (!variable_str->empty() && !itIsANumber(*variable_str)) {
-      *variable_str = copia;  // Revierte si meten letras
+      *variable_str = copia;  // Revert if letters are entered
     } else if (!variable_str->empty()) {
-      *variable_int = std::stoi(*variable_str);  // Actualiza el entero
+      *variable_int = std::stoi(*variable_str);  // Update the integer
     }
     return result;
   });
@@ -117,12 +117,12 @@ void ConsoleInputs::inputMenu(Utils::Simulation& simulation) {
 
   auto clasicMenu = Menu(&clasicOptions, &clasicOptionSelected);
 
-  // 4. El contenedor Tab (Derecha)
-  // Muestra el input correspondiente según el índice de 'seleccionado'
+  // 4. The Tab container (Right)
+  // Shows the corresponding input according to the selected index
   auto clasicInputsContainer = Container::Tab(
       {inputNumberOfTries2, inputStrategyType}, &clasicOptionSelected);
 
-  // Botón para finalizar
+  // Button to finish
   Component clasicSaveBoton = Button("Save", [&] { actual_menu = 1; });
 
   auto clasicOptionsContainer = Container::Vertical(
@@ -155,14 +155,14 @@ void ConsoleInputs::inputMenu(Utils::Simulation& simulation) {
 
   auto customMenu = Menu(&customOptions, &customOptionSelected);
 
-  // 4. El contenedor Tab (Derecha)
-  // Muestra el input correspondiente según el índice de 'seleccionado'
+  // 4. The Tab container (Right)
+  // Shows the corresponding input according to the selected index
   auto customInputsContainer =
       Container::Tab({inputNumberOfDoors, inputNumberOFWiningDoors,
                       inputNumberOfTries, inputNumberOfSwaps},
                      &customOptionSelected);
 
-  // Botón para finalizar
+  // Button to finish
   Component customSaveBoton = Button("Save", [&] { actual_menu = 3; });
 
   auto customOptionsContainer = Container::Vertical(

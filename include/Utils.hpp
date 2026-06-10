@@ -34,10 +34,10 @@ struct Simulation {
   int swap = 0;  // Save the number of situations where stays the selection.
 
   int typeOfSimulation = 0;
-  // Constructor por defecto normal
+  // Default normal constructor
   Simulation() = default;
 
-  // CONSTRUCTOR DE MOVIMIENTO
+  // MOVE CONSTRUCTOR
   Simulation(Simulation&& other) noexcept {
     this->desition = other.desition;
     this->numberOfDoors = other.numberOfDoors;
@@ -81,19 +81,18 @@ inline int getRandomChose(int minValue, int maxValue) {
 
 inline vector<int> getRandomChoses(int minValue, int maxValue, int length) {
   std::vector<int> numbers;
-  numbers.reserve(
-      length);  // Optimizamos memoria reservando el espacio de antemano
+  numbers.reserve(length);  // Optimize memory by reserving space in advance
 
-  // 1. Inicializar el dispositivo de aleatoriedad (semilla)
+  // 1. Initialize the randomness device (seed)
   std::random_device rd;
 
-  // 2. Inicializar el motor generador con la semilla
+  // 2. Initialize the generator engine with the seed
   std::mt19937 gen(rd());
 
-  // 3. Definir la distribución uniforme entre a y b
+  // 3. Define the uniform distribution between a and b
   std::uniform_int_distribution<int> distribucion(minValue, maxValue);
 
-  // 4. Llenar el vector
+  // 4. Fill the vector
   for (int i = 0; i < length; ++i) {
     numbers.push_back(distribucion(gen));
   }
