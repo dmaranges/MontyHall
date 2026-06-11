@@ -139,3 +139,8 @@ void Simulator::customMontyHallSimulation() {
   LOG_INFO("Simulation completed. Local wins: ", localSimulationWins,
            ", Total wins: ", sim.totalWins.load());
 }
+
+int Simulator::totalWins() const { return sim.totalWins.load(); }
+int Simulator::totalStays() const { return sim.stays; }
+int Simulator::totalSwaps() const { return sim.swaps; }
+int Simulator::totalTries() const { return sim.numberOfTries; }

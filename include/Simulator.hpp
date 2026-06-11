@@ -17,6 +17,11 @@ class Simulator {
 
   void startSimulation();
 
+  int totalWins() const;
+  int totalStays() const;
+  int totalSwaps() const;
+  int totalTries() const;
+
  private:
   bool isWinner(int door, std::vector<int>& doors);
   void startThreadPoolSimulations(const bool simulationType);
