@@ -37,6 +37,7 @@ set(SOURCES
     src/main.cpp 
     src/Simulator.cpp 
     src/ConsoleInputs.cpp
+    src/Config.cpp
 )
 
 # 4. Create the main executable

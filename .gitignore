@@ -39,6 +39,11 @@
 # Builds
 build/
 
+### Application Logs ###
+# Builds
+logs/
+*.log
+
 ### VisualStudioCode ###
 .vscode/
 !.vscode/settings.json
